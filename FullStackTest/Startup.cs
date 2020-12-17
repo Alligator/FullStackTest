@@ -17,6 +17,8 @@ namespace FullStackTest
 
         public IConfiguration Configuration { get; }
 
+        private const string XoriginPolicy = "X-OriginPolicy";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -26,6 +28,16 @@ namespace FullStackTest
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
+            });
+
+            services.AddCors(x =>
+            {
+                x.AddPolicy(XoriginPolicy, y =>
+                {
+                    y.AllowAnyOrigin();
+                    y.AllowAnyHeader();
+                    y.AllowAnyMethod();
+                });
             });
         }
 
@@ -61,6 +73,8 @@ namespace FullStackTest
             {
                 spa.Options.SourcePath = "ClientApp/build";
             });
+
+            app.UseCors(XoriginPolicy);
         }
     }
 }

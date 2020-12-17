@@ -20,6 +20,10 @@ function Calculator(props) {
         onClick={(action, keyValue) => {
           if (!action) {
             updateNumber(keyValue);
+          } else if (action === 'fib') {
+            fetch('calculator/fibonacci?input=1').then((response) => {
+              debugger;
+            });
           }
         }}
       />
